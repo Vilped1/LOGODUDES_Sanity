@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 
 export default function ProduktCard({ productInfo, setAmount, setCart, cart }) {
 
@@ -27,8 +28,9 @@ export default function ProduktCard({ productInfo, setAmount, setCart, cart }) {
 
   return (
     <article>
-      <img src={"/website_images/PROD_master_wu.webp" } alt={productInfo.productname} />
-      <a href="#">KATEGORINAVN</a>
+      <img src={productInfo.image} alt={productInfo.productname} />
+      <Link to={"/produkter/" + productInfo.catslug}>{productInfo.catname}</Link>
+      {/* <a href="#">{productInfo.catname}</a> */}
       <h3>{productInfo.productname}</h3>
       <span>Kr. {productInfo.price},-</span>
       <button onClick={handleClick}>Legg i handlekurv</button>

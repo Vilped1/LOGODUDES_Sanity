@@ -1,5 +1,5 @@
 export default function Title({ category }) {
     return (
-        <h2>{category.replaceAll("-", " ")}</h2>
+        <h2>{category}</h2>
     )
 }

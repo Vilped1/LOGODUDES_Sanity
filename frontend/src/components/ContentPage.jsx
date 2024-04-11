@@ -1,4 +1,3 @@
-import { products } from '../assets/legoduds'
 import Title from './Title'
 import ProduktCard from './ProductCard'
 import { useParams } from 'react-router-dom'
@@ -23,19 +22,8 @@ export default function ContentPage({ amount, setAmount, category, setCart, cart
   return (
     <main>
       <Title category={catInfo?.categorytitle} /> 
-      {/* {products.map(product =>
-        <ProduktCard
-          cart={cart}
-          setCart={setCart}
-          prodid={product.prodid}
-          key={product.prodid}
-          category={product.category}
-          title={product.title}
-          img={product.imagefile}
-          price={product.price}
-          amount={amount}
-          setAmount={setAmount}
-        />)} */}
+      {catInfo?.catProducts.map((product, index) => 
+      <ProduktCard key={index} productInfo={product} setAmount={setAmount} setCart={setCart} cart={cart} />)}
     </main>
   )
 }

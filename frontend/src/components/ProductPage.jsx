@@ -31,6 +31,37 @@ export default function ProductPage() {
                     </p>
                     <p>{product?.description}</p>
                     <p className="priceview">Kr. {product?.price},-</p>
+                    <h3>Anmeldelser:</h3>
+                    <form action="">
+                        <p>
+                            <label htmlFor="reviewer">Ditt navn:</label><br />
+                            <input name="reviewer" id="revewer" type="text" />
+                        </p>
+                        <p>
+                            <label htmlFor="comment">Kommentar:</label><br />
+                            <textarea name="comment" id="comment"></textarea>
+                        </p>
+                        <p>
+                            <label htmlFor="rating">Vurdering:</label><br />
+                            <select name="rating" id="rating">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </p>
+                        <p><button>Send anmeldelse</button></p>
+                    </form>
+                    {
+                        product?.reviews.map((r, index) => 
+                            <p key={index}>
+                                <strong>{r.reviewer}</strong><br />
+                                {r.comment}<br />
+                                Vurdering: {r.rating}
+                            </p>
+                        )
+                    }
                 </article>
             </main>
         )

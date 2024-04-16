@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Cart from "./Cart";
+import { Link } from "react-router-dom";
 
 // export default function Header({inCart}) {
 export default function Header({ amount, cart, setCart }) {
@@ -13,7 +14,7 @@ export default function Header({ amount, cart, setCart }) {
 
     return (
         <header>
-            <img id="logo" src="/website_images/LD_logo.svg" alt="LEGOdudes nettbutikk" />
+            <Link to={"/"}><img id="logo" src="/website_images/LD_logo.svg" alt="LEGOdudes nettbutikk" /></Link>
             <button id="carttoggle" onClick={handleClick}>
                 <span id="cartcount">{amount}</span> 
                 {/* <span id="cartcount">{inCart}</span> */}

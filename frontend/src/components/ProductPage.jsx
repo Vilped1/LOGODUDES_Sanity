@@ -3,6 +3,29 @@ import { fetchProductBySlug } from "../../sanity/services/productServices"
 import { useEffect, useState } from "react"
 
 export default function ProductPage() {
+    // Sattes for å lagre skjemainformasjon
+    const [reviewer, setReviewer] = useState("")
+    const [comment, setComment] = useState("")
+    const [rating, setRating] = useState(0)
+
+    // handleChange-funksjoner for felter
+    const handleReviewerChange = (e) => {
+        e.preventDefault()
+        setReviewer(e.target.value)
+    }
+
+    const handleCommentChange = (e) => {
+        e.preventDefault()
+        setComment(e.target.value)
+        console.log("C", e.target.value)
+    }
+
+    const handleRatingChange = (e) => {
+        e.preventDefault()
+        setRating(e.target.value)
+        console.log("R", e.target.value)
+    }
+
     const {slug} = useParams()
     const [product, setProduct] = useState(null)
 
@@ -17,6 +40,7 @@ export default function ProductPage() {
 
     console.log("Product", product)
 
+    // Hvis
     if(product) {
         return (
             <main id="productpage">
@@ -26,7 +50,7 @@ export default function ProductPage() {
                 <article>
                     <h2>{product?.productname}</h2>
                     <p className="metainfo">
-                        <Link to={"producter/" + product?.catslug}>{product?.categoryname}</Link>
+                        <Link to={"/produkter/" + product?.catslug}>{product?.categoryname}</Link>
                         <span className="stockcount">{product?.stock === 0 ? "Tomt" : product?.stock} på lager</span>
                     </p>
                     <p>{product?.description}</p>
@@ -35,15 +59,15 @@ export default function ProductPage() {
                     <form action="">
                         <p>
                             <label htmlFor="reviewer">Ditt navn:</label><br />
-                            <input name="reviewer" id="revewer" type="text" />
+                            <input name="reviewer" id="revewer" onChange={handleReviewerChange} type="text" />
                         </p>
                         <p>
                             <label htmlFor="comment">Kommentar:</label><br />
-                            <textarea name="comment" id="comment"></textarea>
+                            <textarea name="comment" id="comment" onChange={handleCommentChange}></textarea>
                         </p>
                         <p>
                             <label htmlFor="rating">Vurdering:</label><br />
-                            <select name="rating" id="rating">
+                            <select name="rating" id="rating" onChange={handleRatingChange}>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>

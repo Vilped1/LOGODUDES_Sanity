@@ -264,3 +264,7 @@ main article.productCard button {
     display: flex;
     justify-content: space-between;
 }
+
+#formmessage {
+    color: #DA291C;
+}

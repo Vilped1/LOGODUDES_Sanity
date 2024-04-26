@@ -1,5 +1,5 @@
 import { Link, useParams } from "react-router-dom"
-import { fetchProductBySlug } from "../../sanity/services/productServices"
+import { fetchProductBySlug, updateReview } from "../../sanity/services/productServices"
 import { useEffect, useState } from "react"
 
 export default function ProductPage() {
@@ -7,6 +7,7 @@ export default function ProductPage() {
     const [reviewer, setReviewer] = useState("")
     const [comment, setComment] = useState("")
     const [rating, setRating] = useState(0)
+    const [formmessage, setFormmessage] = useState("")
 
     // handleChange-funksjoner for felter
     const handleReviewerChange = (e) => {
@@ -22,8 +23,26 @@ export default function ProductPage() {
 
     const handleRatingChange = (e) => {
         e.preventDefault()
-        setRating(e.target.value)
+        setRating(Number(e.target.value))
         console.log("R", e.target.value)
+    }
+
+    // handleSubmit-funksjon for når en bruker sender en anmeldelse
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        if(rating === 0) {
+            setFormmessage("Du må velge en vurdering")
+        } else {
+            const result = await updateReview(product._id, reviewer, comment, rating)
+            console.log(result)
+            if(result === "Success") {
+                setFormmessage("Din anmeldelse er registrert")
+                product.reviews.push({reviewer, comment, rating})
+            } else {
+                setFormmessage(result)
+            }
+            console.log(result)
+        }
     }
 
     const {slug} = useParams()
@@ -67,7 +86,9 @@ export default function ProductPage() {
                         </p>
                         <p>
                             <label htmlFor="rating">Vurdering:</label><br />
-                            <select name="rating" id="rating" onChange={handleRatingChange}>
+                            <select name="rating" id="rating" required onChange={handleRatingChange}>
+                                <option value="">...</option>
+                                {/* <option value="0">...</option> */}
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -75,10 +96,11 @@ export default function ProductPage() {
                                 <option value="5">5</option>
                             </select>
                         </p>
-                        <p><button>Send anmeldelse</button></p>
+                        <p id="formmessage">{formmessage}</p>
+                        <p><button onClick={handleSubmit}>Send anmeldelse</button></p>
                     </form>
                     {
-                        product?.reviews.map((r, index) => 
+                        product?.reviews?.map((r, index) => 
                             <p key={index}>
                                 <strong>{r.reviewer}</strong><br />
                                 {r.comment}<br />
